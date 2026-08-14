@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETF（指數股票型基金）視覺化速查指南</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 12px 24px -10px rgba(56, 189, 248, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .accent-gradient {
+            background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 selection:bg-sky-500 selection:text-white">
+
+    <!-- Sticky Navigation / Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 rounded-xl accent-gradient text-white shadow-lg shadow-sky-500/20">
+                    <i data-lucide="candlestick-chart" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-lg tracking-wide text-white">ETF 投資速查指南</span>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-300">
+                <a href="#comparison" class="hover:text-sky-400 transition">工具比較</a>
+                <a href="#advantages" class="hover:text-sky-400 transition">核心優勢</a>
+                <a href="#types" class="hover:text-sky-400 transition">熱門類型</a>
+                <a href="#risks" class="hover:text-sky-400 transition">風險應對</a>
+                <a href="#steps" class="hover:text-sky-400 transition">入門 3 步驟</a>
+            </nav>
+            <button onclick="window.print()" class="flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 transition">
+                <i data-lucide="printer" class="w-4 h-4"></i> 列印 / 儲存 PDF
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-16">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-6 pt-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs sm:text-sm font-medium">
+                <i data-lucide="sparkles" class="w-4 h-4"></i> 新手必備 · 一圖掌握 ETF 核心邏輯
+            </div>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                解構 <span class="gradient-text">ETF 指數股票型基金</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed">
+                結合「股票的交易便利」與「基金的分散風險」。不用費心挑選單一股票，一次打包全市場優秀企業！
+            </p>
+
+            <!-- Quick Stats/Badges -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-4">
+                <div class="glass-card p-4 rounded-2xl text-center">
+                    <div class="text-xs text-slate-400 mb-1">投資哲學</div>
+                    <div class="text-base font-bold text-sky-400">買下一整個市場</div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl text-center">
+                    <div class="text-xs text-slate-400 mb-1">交易機制</div>
+                    <div class="text-base font-bold text-indigo-400">盤中隨時買賣</div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl text-center">
+                    <div class="text-xs text-slate-400 mb-1">成本管理</div>
+                    <div class="text-base font-bold text-emerald-400">超低內扣費用</div>
+                </div>
+                <div class="glass-card p-4 rounded-2xl text-center">
+                    <div class="text-xs text-slate-400 mb-1">風險控制</div>
+                    <div class="text-base font-bold text-amber-400">自動分散風險</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: ETF 基本觀念與比較表 -->
+        <section id="comparison" class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="scale" class="text-sky-400"></i> 三大投資工具全方位超級比較
+                </h2>
+                <p class="text-slate-400 text-sm">單一股票 vs 傳統共同基金 vs ETF，到底差在哪裡？</p>
+            </div>
+
+            <!-- Visual Metaphor Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Stock -->
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-rose-500 space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-semibold px-2 py-1 bg-rose-500/10 text-rose-400 rounded-md">集中風險</span>
+                            <h3 class="text-xl font-bold mt-2">單一股票 <span class="text-xs text-slate-400 font-normal">Stock</span></h3>
+                        </div>
+                        <div class="p-3 bg-rose-500/10 rounded-xl text-rose-400">
+                            <i data-lucide="utensils" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-800/80 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">形象化比喻</div>
+                        <div class="text-sm font-semibold text-rose-300">🍽️ 餐廳單點主菜</div>
+                        <div class="text-xs text-slate-400 mt-1">主菜好吃極賺，主菜毀了全盤皆輸</div>
+                    </div>
+                    <ul class="text-xs text-slate-300 space-y-2.5 pt-2">
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-rose-400"></i> <b>交易管道：</b> 證券交易所（盤中即時）</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-rose-400"></i> <b>價格波動：</b> 盤中即時變動</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-rose-400"></i> <b>風險程度：</b> <span class="text-rose-400 font-bold">較高</span>（極易受單一公司影響）</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-rose-400"></i> <b>管理費用：</b> 無管理費（僅手續費與稅）</li>
+                    </ul>
+                </div>
+
+                <!-- Mutual Fund -->
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-amber-500 space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-semibold px-2 py-1 bg-amber-500/10 text-amber-400 rounded-md">主動選股</span>
+                            <h3 class="text-xl font-bold mt-2">傳統共同基金 <span class="text-xs text-slate-400 font-normal">Mutual Fund</span></h3>
+                        </div>
+                        <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400">
+                            <i data-lucide="chef-hat" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-800/80 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">形象化比喻</div>
+                        <div class="text-sm font-semibold text-amber-300">👨‍🍳 高級餐廳無菜單料理</div>
+                        <div class="text-xs text-slate-400 mt-1">全權交給主廚（經理人）揮毫，手續費較貴</div>
+                    </div>
+                    <ul class="text-xs text-slate-300 space-y-2.5 pt-2">
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-amber-400"></i> <b>交易管道：</b> 銀行、基金平台</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-amber-400"></i> <b>價格波動：</b> 每日收盤後結算單一淨值</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-amber-400"></i> <b>風險程度：</b> 中等（經理人選股分散風險）</li>
+                        <li class="flex items-center gap-2"><i data-lucide="arrow-right-circle" class="w-4 h-4 text-amber-400"></i> <b>管理費用：</b> <span class="text-amber-400 font-bold">較高</span>（包含經理人與高額管理費）</li>
+                    </ul>
+                </div>
+
+                <!-- ETF -->
+                <div class="glass-card p-6 rounded-2xl border-t-4 border-t-emerald-500 space-y-4 ring-2 ring-emerald-500/30">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs font-semibold px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-md">最佳折衷首選</span>
+                            <h3 class="text-xl font-bold mt-2 text-emerald-400">ETF 指數股票型基金</h3>
+                        </div>
+                        <div class="p-3 bg-emerald-500/20 rounded-xl text-emerald-400">
+                            <i data-lucide="box" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-800/80 rounded-xl">
+                        <div class="text-xs text-slate-400 mb-1">形象化比喻</div>
+                        <div class="text-sm font-semibold text-emerald-300">🍱 菜色透明綜合便當</div>
+                        <div class="text-xs text-slate-400 mt-1">菜色明確配好、營養均衡、高 CP 值</div>
+                    </div>
+                    <ul class="text-xs text-slate-300 space-y-2.5 pt-2">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> <b>交易管道：</b> 證券交易所（像買股票一樣）</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> <b>價格波動：</b> 盤中隨時即時變動</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> <b>風險程度：</b> <span class="text-emerald-400 font-bold">中/低</span>（追蹤指數，自動分散）</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> <b>管理費用：</b> <span class="text-emerald-400 font-bold">極低</span>（被動追蹤，省下龐大成本）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: ETF 核心優勢一覽表 -->
+        <section id="advantages" class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="shield-check" class="text-sky-400"></i> 為什麼全世界都在投 ETF？4 大核心優勢
+                </h2>
+                <p class="text-slate-400 text-sm">幫助一般投資者輕鬆對抗市場波動與不確定性</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Advantage 1 -->
+                <div class="glass-card p-6 rounded-2xl glass-card-hover space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
+                        <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">分散風險</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        一次購入數十至上千家公司股票或債券，徹底避免單一公司倒閉帶來的毀滅性打擊。
+                    </p>
+                    <div class="pt-2 border-t border-slate-700/50 text-xs font-medium text-sky-300">
+                        ✨ 效益：防禦力升級，不踩單一地雷
+                    </div>
+                </div>
+
+                <!-- Advantage 2 -->
+                <div class="glass-card p-6 rounded-2xl glass-card-hover space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">交易便利</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        只要擁有台/美股證券戶，就能像下單單一股票一樣隨買隨賣，流動性高且極度靈活。
+                    </p>
+                    <div class="pt-2 border-t border-slate-700/50 text-xs font-medium text-indigo-300">
+                        ✨ 效益：隨時掛價成交，靈活用金
+                    </div>
+                </div>
+
+                <!-- Advantage 3 -->
+                <div class="glass-card p-6 rounded-2xl glass-card-hover space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="piggy-bank" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">低廉費用</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        多數被動追蹤指數，不需給付高額選股研究費，內扣費用遠低於主動型基金。
+                    </p>
+                    <div class="pt-2 border-t border-slate-700/50 text-xs font-medium text-emerald-300">
+                        ✨ 效益：省下即是賺到，長期滾大複利
+                    </div>
+                </div>
+
+                <!-- Advantage 4 -->
+                <div class="glass-card p-6 rounded-2xl glass-card-hover space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                        <i data-lucide="eye" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold">高度透明</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        發行公司每日於官網更新成分股名單與權重，投資人能精確掌控每一分錢買了什麼。
+                    </p>
+                    <div class="pt-2 border-t border-slate-700/50 text-xs font-medium text-purple-300">
+                        ✨ 效益：持股全公開，拒絕黑箱操作
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 常見 ETF 類型對照表 -->
+        <section id="types" class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="layers" class="text-sky-400"></i> 5 大熱門 ETF 類型圖鑑
+                </h2>
+                <p class="text-slate-400 text-sm">挑選最適合你人生階段與風險偏好的投資夥伴</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-6" id="type-tabs">
+                <button onclick="filterType('all')" class="type-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 text-white transition">全部顯示</button>
+                <button onclick="filterType('market')" class="type-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">市值型</button>
+                <button onclick="filterType('dividend')" class="type-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">高股息型</button>
+                <button onclick="filterType('sector')" class="type-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">產業/主題型</button>
+                <button onclick="filterType('bond')" class="type-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">債券型</button>
+                <button onclick="filterType('leveraged')" class="type-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">槓桿/反向型</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="type-cards-container">
+
+                <!-- 市值型 -->
+                <div class="type-card glass-card p-6 rounded-2xl space-y-4" data-category="market">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-400 text-xs font-semibold">整體經濟紅利</span>
+                        <span class="text-xs text-slate-400">波動度：中等</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-sky-300">1. 市值型 ETF</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <b>核心策略：</b> 挑選市場市值最大、最具代表性的龍頭公司，跟隨整體大盤經濟長期成長。
+                    </p>
+                    <div class="space-y-2 pt-2 border-t border-slate-700/60 text-xs">
+                        <div><span class="text-slate-400">代表標的 (台股)：</span> <span class="text-emerald-400 font-bold">0050</span>（元大台灣50）、<span class="text-emerald-400 font-bold">006208</span>（富邦台50）</div>
+                        <div><span class="text-slate-400">代表標的 (美股)：</span> <span class="text-sky-400 font-bold">VOO</span>（S&P 500）、<span class="text-sky-400 font-bold">QQQ</span>（納斯達克100）</div>
+                    </div>
+                    <div class="p-3 bg-sky-950/40 border border-sky-800/40 rounded-xl text-xs text-sky-200">
+                        🎯 <b>適合對象：</b> 追求長期資產倍增、相信大盤長期向上的小資族與小企業主。
+                    </div>
+                </div>
+
+                <!-- 高股息型 -->
+                <div class="type-card glass-card p-6 rounded-2xl space-y-4" data-category="dividend">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-semibold">穩定現金流</span>
+                        <span class="text-xs text-slate-400">波動度：中/低</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-300">2. 高股息型 ETF</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <b>核心策略：</b> 篩選預估或歷史股息殖利率較高且營運穩健的企業，定期發放配息。
+                    </p>
+                    <div class="space-y-2 pt-2 border-t border-slate-700/60 text-xs">
+                        <div><span class="text-slate-400">代表標的 (台股)：</span> <span class="text-emerald-400 font-bold">0056</span>（元大高股息）、<span class="text-emerald-400 font-bold">00878</span>（國泰永續高股息）</div>
+                        <div><span class="text-slate-400">代表標的 (美股)：</span> <span class="text-sky-400 font-bold">VYM</span>（高股息 ETF）、<span class="text-sky-400 font-bold">SCHD</span>（美國紅利股）</div>
+                    </div>
+                    <div class="p-3 bg-emerald-950/40 border border-emerald-800/40 rounded-xl text-xs text-emerald-200">
+                        🎯 <b>適合對象：</b> 偏好有規律被動收入、退休族、需要被動現金流的人。
+                    </div>
+                </div>
+
+                <!-- 產業/主題型 -->
+                <div class="type-card glass-card p-6 rounded-2xl space-y-4" data-category="sector">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-400 text-xs font-semibold">聚焦新興趨勢</span>
+                        <span class="text-xs text-slate-400">波動度：高</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-purple-300">3. 產業 / 主題型 ETF</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <b>核心策略：</b> 聚焦單一熱門產業或顛覆性趨勢（如 AI、半導體、電動車、5G）。
+                    </p>
+                    <div class="space-y-2 pt-2 border-t border-slate-700/60 text-xs">
+                        <div><span class="text-slate-400">代表標的 (台股)：</span> <span class="text-emerald-400 font-bold">00881</span>（國泰台灣5G+）</div>
+                        <div><span class="text-slate-400">代表標的 (美股)：</span> <span class="text-sky-400 font-bold">SOXX</span>（費城半導體）、<span class="text-sky-400 font-bold">ARKK</span>（破壞式創新）</div>
+                    </div>
+                    <div class="p-3 bg-purple-950/40 border border-purple-800/40 rounded-xl text-xs text-purple-200">
+                        🎯 <b>適合對象：</b> 看好特定新興科技產業、願承受較高價格波動的進階投資人。
+                    </div>
+                </div>
+
+                <!-- 債券型 -->
+                <div class="type-card glass-card p-6 rounded-2xl space-y-4" data-category="bond">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-400 text-xs font-semibold">避險與固定收益</span>
+                        <span class="text-xs text-slate-400">波動度：低</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-amber-300">4. 債券型 ETF</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <b>核心策略：</b> 持有國家政府公債或高評級公司債，按期領取固定債息，穩定度高。
+                    </p>
+                    <div class="space-y-2 pt-2 border-t border-slate-700/60 text-xs">
+                        <div><span class="text-slate-400">代表標的 (台股)：</span> <span class="text-emerald-400 font-bold">00679B</span>（元大美債20年）</div>
+                        <div><span class="text-slate-400">代表標的 (美股)：</span> <span class="text-sky-400 font-bold">TLT</span>（美國長天期公債）、<span class="text-sky-400 font-bold">BND</span>（全市場債券）</div>
+                    </div>
+                    <div class="p-3 bg-amber-950/40 border border-amber-800/40 rounded-xl text-xs text-amber-200">
+                        🎯 <b>適合對象：</b> 股債配置避險、追求穩定配息與資產安全保障者。
+                    </div>
+                </div>
+
+                <!-- 槓桿/反向型 -->
+                <div class="type-card glass-card p-6 rounded-2xl space-y-4" data-category="leveraged">
+                    <div class="flex justify-between items-center">
+                        <span class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-400 text-xs font-semibold">短期交易工具</span>
+                        <span class="text-xs text-slate-400">波動度：極高</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-rose-300">5. 槓桿 / 反向型 ETF</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <b>核心策略：</b> 利用衍生性商品提供指數的多倍（如正2）或反向（如反1）報酬率。
+                    </p>
+                    <div class="space-y-2 pt-2 border-t border-slate-700/60 text-xs">
+                        <div><span class="text-slate-400">代表標的 (台股)：</span> <span class="text-emerald-400 font-bold">00631L</span>（正2）、<span class="text-emerald-400 font-bold">00632R</span>（反1）</div>
+                        <div><span class="text-slate-400">代表標的 (美股)：</span> <span class="text-sky-400 font-bold">TQQQ</span>（3倍正2）、<span class="text-sky-400 font-bold">SQQQ</span>（3倍反1）</div>
+                    </div>
+                    <div class="p-3 bg-rose-950/40 border border-rose-800/40 rounded-xl text-xs text-rose-200">
+                        ⚠️ <b>適合對象：</b> 僅適合具備專業經驗的短期波段操作者，<span class="underline">嚴禁長期存股</span>。
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 4: 投資 ETF 的主要風險與因應策略 -->
+        <section id="risks" class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="alert-triangle" class="text-amber-400"></i> ETF 4 大潛在風險與避坑指南
+                </h2>
+                <p class="text-slate-400 text-sm">投資非穩賺不賠，搞懂風險才能走得長遠</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Risk 1 -->
+                <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                    <div class="p-3 rounded-xl bg-rose-500/10 text-rose-400 shrink-0">
+                        <i data-lucide="trending-down" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-lg text-slate-100">1. 市場風險 (Market Risk)</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            ETF 雖然能分散單一公司風險，但大盤整體急跌或陷入熊市時，成分股仍會一同下滑。
+                        </p>
+                        <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 shrink-0"></i>
+                            <span><b>應對策略：</b> 建立長期投資心態，拉長時間軸，避免因短期市場恐慌拋售。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk 2 -->
+                <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                    <div class="p-3 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
+                        <i data-lucide="scale-down" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-lg text-slate-100">2. 折溢價風險 (Premium / Discount)</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            <b>市價</b>（盤中成交價）與 <b>淨值</b>（實際成分股價值）產生偏差。大幅溢價買進等於「買貴了」。
+                        </p>
+                        <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 shrink-0"></i>
+                            <span><b>應對策略：</b> 下單前至券商 App 或投信官網確認折溢價，溢價 >1% 宜等待平穩。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk 3 -->
+                <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                    <div class="p-3 rounded-xl bg-sky-500/10 text-sky-400 shrink-0">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-lg text-slate-100">3. 追蹤誤差 (Tracking Error)</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            因內扣管理費、交易手續費或抽樣複製比例，導致 ETF 績效與標的指數無法 100% 貼合。
+                        </p>
+                        <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 shrink-0"></i>
+                            <span><b>應對策略：</b> 優先挑選發行規模大、流動性佳、過去追蹤誤差紀錄極小的 ETF。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk 4 -->
+                <div class="glass-card p-6 rounded-2xl flex gap-4 items-start">
+                    <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 shrink-0">
+                        <i data-lucide="percent" class="w-6 h-6"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-bold text-lg text-slate-100">4. 內扣費用侵蝕 (Expense Ratio)</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            管理費與運營成本每日直接從淨值中悄悄扣除，長期若費用率過高會顯著影響總報酬。
+                        </p>
+                        <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+                            <i data-lucide="shield" class="w-4 h-4 shrink-0"></i>
+                            <span><b>應對策略：</b> 比對同類型 ETF，優先選擇「總費用率（Total Expense Ratio）」低者。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: ETF 投資入門 3 步驟 -->
+        <section id="steps" class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="rocket" class="text-sky-400"></i> 新手 ETF 實戰入門 3 步驟
+                </h2>
+                <p class="text-slate-400 text-sm">按部就班，今天就能開始打造你的被動資產系統</p>
+            </div>
+
+            <!-- Steps Flowchart -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+
+                <!-- Step 1 -->
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-sky-500 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="w-8 h-8 rounded-full bg-sky-500 text-white font-bold flex items-center justify-center text-sm">1</span>
+                        <span class="text-xs text-sky-400 font-semibold">首要準備</span>
+                    </div>
+                    <h3 class="text-lg font-bold">開立證券戶</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        挑選一家下單 App 順手、定額手續費折扣優的券商開戶，並綁定指定交割銀行帳戶。
+                    </p>
+                    <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-slate-300">
+                        💡 <b>重點提醒：</b> 記得同時開啟「定期定額」與「電子下單」功能更便利。
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-indigo-500 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="w-8 h-8 rounded-full bg-indigo-500 text-white font-bold flex items-center justify-center text-sm">2</span>
+                        <span class="text-xs text-indigo-400 font-semibold">資金劃分</span>
+                    </div>
+                    <h3 class="text-lg font-bold">擬定投資策略</h3>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-2 bg-indigo-950/40 border border-indigo-800/40 rounded-lg">
+                            <b>📅 定期定額：</b> 每月固定扣款，平均成本，最適合上班族與小資。
+                        </div>
+                        <div class="p-2 bg-slate-800/60 rounded-lg">
+                            <b>💰 單筆分批：</b> 手頭有較大額資金時，分 3-6 個月逐步入場。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-emerald-500 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span class="w-8 h-8 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center text-sm">3</span>
+                        <span class="text-xs text-emerald-400 font-semibold">標的配對</span>
+                    </div>
+                    <h3 class="text-lg font-bold">挑選適當標的</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        根據個人風險承受度與年齡選擇適當組合：
+                    </p>
+                    <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                        <li><b>年輕 / 小資族：</b> 首選市值型（如 0050, VOO）</li>
+                        <li><b>偏好現金流：</b> 搭配高股息（如 00878, SCHD）</li>
+                        <li><b>資產避險：</b> 適度加入債券型（如 TLT）</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Summary / Footer -->
+        <footer class="glass-card p-8 rounded-3xl text-center space-y-4">
+            <h3 class="text-xl font-bold text-white">💡 投資 ETF 的終極金律</h3>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                「早點開始，買在低成本被動指數，長期持有，不因市場短期波動隨意離場。」<br>
+                讓時間與複利為你的資產加速成長！
+            </p>
+            <div class="text-xs text-slate-500 pt-4 border-t border-slate-800">
+                本速查指南僅供投資觀念教學與參考，不構成任何買賣投資建議。投資前請獨立評估個人風險。
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Category Filter Logic
+        function filterType(category) {
+            const cards = document.querySelectorAll('.type-card');
+            const buttons = document.querySelectorAll('.type-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-sky-500', 'text-white', 'active');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300');
+            event.currentTarget.classList.add('bg-sky-500', 'text-white', 'active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
